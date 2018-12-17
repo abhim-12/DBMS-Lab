@@ -1,0 +1,44 @@
+1.  select ssn from e where ssn=(select usn from a where projectno=(select projectno from where projectarea='database'));
+	select count(ssn),deptno from e group by deptno;
+	update a set projectno='20’ where usn='01';
+
+	db.EMPLOYEE.find().pretty()
+	a> db.EMPLOYEE.find({"DeptNo":'XYZ'}).pretty()
+	b> db.EMPLOYEE.find({"ProjectNo":104}).pretty()
+
+2.  select pno from supply where sno IN(select sno from supplier where sname='Ram');
+	select sname,pname from supplier,supply,part where pname='bolt' AND supply.sno=supplier.sno AND part.pno=supply.pno;
+	delete from part where colour='green';
+
+	db.WAREHOUSE.find().pretty()
+	a> db.WAREHOUSE.update({"PNO":1950},{$set:{"PNO":2017}},{multi:true})
+	>db.WAREHOUSE.find().pretty()
+	b> db.WAREHOUSE.find({"PNO":2017}).pretty()
+
+3.  select bid from reserves where sid IN(select sid from sailor where sname='RAM');
+	select bid,sname from reserves r join sailor s on (r.sid=s.sid);
+	select count(bid),sid from reserves group by sid;
+
+	a> db.BOATRES.find({"SNAME":'Sucre'}).count()
+	b> db.BOATRES.find({"COLOUR":'White'}).pretty()
+
+4.	select wname from warehouse where wno in(select wno from shipment where pno=(select pno from part where color='red'));
+	select pno,wname from shipments s join warehouse w on(s.wno=w.wno);
+	select count(pno),wno from shipments group by wno;
+
+	db.SHIPMENT.find().pretty()
+	a> db.SHIPMENT.find({"WNAME":'ABC'}).pretty()
+	b> db.SHIPMENT.aggregate([{ $group:{_id:"$WNAME",total:{$sum:"$QUANTITY"}}}])
+
+5.  select name from student where usn=(select usn from borrow where isbn='123');
+	select name from student where usn=(select usn from borrow where isbn=(select isbn from books where title='database'));
+	select count(isbn) from borrow group by usn;
+
+	db.LIBRARY.find().pretty()
+	a> db.LIBRARY.find({"ISBN":123},{"SSN":1,_id:0}).pretty()
+	b> db.LIBRARY.find({"TITLE":'datbase'},{"SSN":1,_id:0}).pretty()
+
+
+
+
+
